@@ -51,28 +51,21 @@ export function ModelsMarketplacePage() {
         <div style={{ maxWidth: 1120, margin: "0 auto", borderLeft: B, borderRight: B }}>
 
           {/* ── Page Header ── */}
-          <div style={{ padding: "48px 32px 36px", borderBottom: B }}>
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
+          <div style={{ padding: "28px 32px 24px", borderBottom: B }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 32, flexWrap: "wrap" }}>
+              {/* Left */}
               <div style={{ flex: 1, minWidth: 0 }}>
-                {/* Label */}
-                <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 8 }}>
-                  <span style={{ fontFamily: F.sans, fontSize: WS.meta, fontWeight: 600, color: blue, letterSpacing: "0.04em" }}>MODELS</span>
-                </div>
-                {/* Title */}
-                <h1 style={{ fontFamily: F.sans, fontSize: WS.section, fontWeight: 600, color: "#0a0a0a", marginBottom: 8, letterSpacing: 0 }}>
+                <span style={{ fontFamily: F.sans, fontSize: WS.meta, fontWeight: 600, color: blue, letterSpacing: "0.04em", display: "block", marginBottom: 4 }}>MODELS</span>
+                <h1 style={{ fontFamily: F.sans, fontSize: WS.section, fontWeight: 600, color: "#0a0a0a", marginBottom: 4, letterSpacing: 0 }}>
                   Open marketplace for LLM tokens
                 </h1>
-                {/* Description */}
-                <p style={{ fontFamily: F.sans, fontSize: WS.body, color: "#666", lineHeight: 1.6, marginBottom: 14, maxWidth: 560 }}>
-                  Compare LLM token prices across provider routes. Prices use the lowest verified route by default; open a model to compare verified and community routes.
+                <p style={{ fontFamily: F.sans, fontSize: WS.body, color: "#666", lineHeight: 1.5, marginBottom: 10, maxWidth: 520 }}>
+                  Compare LLM token prices across provider routes. Open a model to compare verified and community routes.
                 </p>
-                {/* Meta */}
                 <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                   <span style={{ fontFamily: F.sans, fontSize: WS.meta, color: "#888" }}>333 models</span>
                   <span style={{ color: "#D5D5D5" }}>·</span>
                   <span style={{ fontFamily: F.sans, fontSize: WS.meta, color: "#888" }}>24 providers</span>
-                  <span style={{ color: "#D5D5D5" }}>·</span>
-                  <span style={{ fontFamily: F.sans, fontSize: WS.meta, color: "#888" }}>300 community routes</span>
                   <span style={{ color: "#D5D5D5" }}>·</span>
                   <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
                     <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#16A34A", flexShrink: 0 }} />
@@ -83,24 +76,10 @@ export function ModelsMarketplacePage() {
                 </div>
               </div>
 
-              {/* Right: Provider entry — no card, text only */}
-              <div style={{ flexShrink: 0, paddingTop: 4, maxWidth: 220 }}>
-                <div style={{ fontFamily: F.sans, fontSize: WS.meta, fontWeight: 600, color: "#A3A3A3", letterSpacing: "0.04em", textTransform: "uppercase" as const, marginBottom: 6 }}>
-                  For providers
-                </div>
-                <div style={{ fontFamily: F.sans, fontSize: WS.body, fontWeight: 600, color: "#111", marginBottom: 4 }}>
-                  List token routes
-                </div>
-                <p style={{ fontFamily: F.sans, fontSize: WS.body, color: "#666", lineHeight: 1.55, margin: "0 0 8px" }}>
-                  Bring your model routes to the OpenModels marketplace.
-                </p>
-                <a href="/providers/apply" style={{ fontFamily: F.sans, fontSize: WS.body, fontWeight: 500, color: blue, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 3, transition: "opacity 100ms" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-                >Become a provider →</a>
-                <p style={{ fontFamily: F.sans, fontSize: WS.meta, color: "#AAAAAA", lineHeight: 1.5, margin: "6px 0 0" }}>
-                  Community routes list faster. Verified routes are reviewed for production usage.
-                </p>
+              {/* Right: Total routes stat — centered in the column */}
+              <div style={{ flexShrink: 0, width: 150, alignSelf: "center" }}>
+                <div style={{ fontFamily: F.mono, fontSize: 30, fontWeight: 700, color: blue, letterSpacing: "-0.03em", lineHeight: 1, marginBottom: 4 }}>41</div>
+                <div style={{ fontFamily: F.sans, fontSize: 12, color: "#666" }}>Total routes</div>
               </div>
             </div>
           </div>
@@ -207,6 +186,19 @@ export function ModelsMarketplacePage() {
             <span style={{ fontFamily: F.sans, fontSize: WS.meta, color: "#C0C0C0" }}>
               Default prices use the lowest verified route. Open a model to compare all verified and community provider routes.
             </span>
+          </div>
+
+          {/* Provider CTA strip */}
+          <div style={{ padding: "24px 32px", borderTop: B, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
+            <div>
+              <div style={{ fontFamily: F.sans, fontSize: WS.meta, fontWeight: 600, color: "#A3A3A3", letterSpacing: "0.04em", textTransform: "uppercase" as const, marginBottom: 4 }}>For providers</div>
+              <div style={{ fontFamily: F.sans, fontSize: WS.body, fontWeight: 600, color: "#111", marginBottom: 3 }}>List your token routes on OpenModels</div>
+              <div style={{ fontFamily: F.sans, fontSize: WS.body, color: "#888" }}>Community routes can be submitted faster. Verified routes are reviewed for production usage.</div>
+            </div>
+            <a href="/providers/apply" style={{ fontFamily: F.sans, fontSize: WS.body, fontWeight: 500, color: blue, textDecoration: "none", flexShrink: 0, transition: "opacity 100ms" }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            >Become a provider →</a>
           </div>
 
         </div>

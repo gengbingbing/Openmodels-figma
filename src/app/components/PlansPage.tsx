@@ -67,7 +67,7 @@ export function PlansPage() {
         <div style={{ maxWidth: 1120, margin: "0 auto", borderLeft: B, borderRight: B }}>
 
           {/* ── Page header ── */}
-          <div style={{ padding: "48px 32px 36px", borderBottom: B }}>
+          <div style={{ padding: "28px 32px 24px", borderBottom: B }}>
             <span style={{ fontFamily: F.sans, fontSize: WS.meta, fontWeight: 600, color: blue, letterSpacing: "0.04em", display: "block", marginBottom: 8 }}>
               PLANS
             </span>

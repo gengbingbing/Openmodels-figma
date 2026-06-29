@@ -152,12 +152,12 @@ export function X402Page() {
       <div style={{ maxWidth: 1120, margin: "0 auto", borderLeft: B, borderRight: B }}>
 
         {/* Header */}
-        <div style={{ padding: "40px 32px 32px", borderBottom: B, display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 32, flexWrap: "wrap" }}>
+        <div style={{ padding: "28px 32px 24px", borderBottom: B, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 32, flexWrap: "wrap" }}>
           {/* Left */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <span style={{ fontFamily: S.sans, fontSize: WS.meta, fontWeight: 600, color: blue, letterSpacing: "0.04em", display: "block", marginBottom: 10 }}>x402</span>
-            <h1 style={{ fontFamily: S.sans, fontSize: WS.section, fontWeight: 600, color: "#0a0a0a", marginBottom: 10, letterSpacing: 0 }}>x402 Endpoints</h1>
-            <p style={{ fontFamily: S.sans, fontSize: WS.body, color: "#555", lineHeight: 1.7, margin: "0 0 6px", maxWidth: 520 }}>
+            <span style={{ fontFamily: S.sans, fontSize: WS.meta, fontWeight: 600, color: blue, letterSpacing: "0.04em", display: "block", marginBottom: 4 }}>x402</span>
+            <h1 style={{ fontFamily: S.sans, fontSize: WS.section, fontWeight: 600, color: "#0a0a0a", marginBottom: 4, letterSpacing: 0 }}>x402 Endpoints</h1>
+            <p style={{ fontFamily: S.sans, fontSize: WS.body, color: "#555", lineHeight: 1.5, margin: "0 0 6px", maxWidth: 520 }}>
               Pay per API call with USDC. No credits or API key required.
             </p>
             <p style={{ fontFamily: S.sans, fontSize: WS.meta, color: "#aaa", margin: 0 }}>

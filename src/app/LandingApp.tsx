@@ -11,6 +11,7 @@ import { Leaderboard } from "./components/Leaderboard";
 import { WhyOpenModels } from "./components/WhyOpenModels";
 import { ApiSection } from "./components/ApiSection";
 import { FAQ } from "./components/FAQ";
+import { HomeCtaStrips } from "./components/HomeCtaStrips";
 import { Footer } from "./components/Footer";
 
 import { AuthPage } from "./components/AuthPage";
@@ -97,6 +98,7 @@ export function LandingApp() {
           <Plans onGetKey={goAuth} />
           <ApiSection />
           <FAQ />
+          <HomeCtaStrips />
         </div>
       </main>
       <Footer onGetKey={goAuth} />

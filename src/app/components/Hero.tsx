@@ -8,9 +8,9 @@ const B  = "1px solid #e2e2e2";
 const Bs = "1px solid #eeeeee";
 
 const badges = [
-  "Provider route visibility",
-  "No proxy chains",
-  "Credit-based billing",
+  "0 platform fees",
+  "Provider route marketplace",
+  "Transparent token pricing",
 ];
 
 const stats = [
@@ -40,7 +40,7 @@ export function Hero({ onGetKey }: HeroProps = {}) {
             <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 22 }}>
               <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#16A34A", flexShrink: 0, boxShadow: "0 0 0 2px rgba(22,163,74,0.18)" }} />
               <span style={{ fontFamily: S.sans, fontSize: 11, fontWeight: 600, color: "#888", letterSpacing: "0.01em" }}>
-                Open provider routes · Transparent pricing · One API
+                Open provider routes · 0 platform fees · Transparent pricing
               </span>
             </div>
 
@@ -58,7 +58,7 @@ export function Hero({ onGetKey }: HeroProps = {}) {
               fontFamily: S.sans, fontSize: 16, color: "#555",
               lineHeight: 1.65, marginBottom: 28, maxWidth: 540,
             }} className="hero-sub">
-              Buy LLM tokens across verified and community provider routes with transparent pricing, route visibility, and one OpenAI-compatible API.
+              Buy LLM tokens across verified and community provider routes with transparent pricing, 0 platform fees, and one OpenAI-compatible API.
             </p>
 
             {/* CTAs */}
@@ -109,7 +109,7 @@ export function Hero({ onGetKey }: HeroProps = {}) {
               textTransform: "uppercase" as const, marginBottom: 8,
             }}>Supported payments</div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              {["Stripe", "MoonPay", "USDC"].map((name, i) => (
+              {["Stripe", "USDC", "x402"].map((name, i) => (
                 <span key={name} style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
                   <span style={{ fontFamily: S.sans, fontSize: 13, color: "#555" }}>{name}</span>
                   {i < 2 && <span style={{ color: "#D0D0D0" }}>·</span>}

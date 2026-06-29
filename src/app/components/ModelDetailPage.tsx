@@ -399,7 +399,12 @@ export function ModelDetailPage() {
                           >
                             <td style={{ padding: "14px 16px" }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                                <span style={{ fontFamily: F.sans, fontSize: 13, fontWeight: 500, color: "#111" }}>{route.provider}</span>
+                                <a href={`/providers/${route.provider.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`}
+                                  onClick={(e) => e.stopPropagation()}
+                                  style={{ fontFamily: F.sans, fontSize: 13, fontWeight: 500, color: "#111", textDecoration: "none", transition: "color 100ms" }}
+                                  onMouseEnter={(e) => (e.currentTarget.style.color = "#0047FF")}
+                                  onMouseLeave={(e) => (e.currentTarget.style.color = "#111")}
+                                >{route.provider}</a>
                                 {routeTab === "verified" && i === 0 && (
                                   <span style={{ fontFamily: F.sans, fontSize: 10, fontWeight: 500, color: "#15803D", background: "#F0FDF4", border: "1px solid #BBF7D0", padding: "1px 6px", borderRadius: 999, whiteSpace: "nowrap" }}>Lowest price</span>
                                 )}
