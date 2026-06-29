@@ -14,9 +14,9 @@ const strips = [
   },
   {
     label: "For partners",
-    title: "Grow with OpenModels",
-    desc: "Refer developers, teams, or communities and earn from qualified OpenModels usage.",
-    cta: "Join the Partner Program →",
+    title: "Launch your own LLM token marketplace",
+    desc: "Create a branded marketplace powered by OpenModels. Choose models, set pricing, and earn from token usage.",
+    cta: "Start as a partner →",
     href: "/partners",
   },
 ];

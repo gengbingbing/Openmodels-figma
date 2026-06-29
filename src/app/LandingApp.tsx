@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation, useSearchParams } from "react-router";
 import { SEO, JsonLd, ORG_LD, WEBSITE_LD, APP_LD, faqLd } from "./lib/seo";
 
 import { Header } from "./components/Header";
@@ -29,25 +29,45 @@ import { RoutesPage }    from "./components/dashboard/pages/RoutesPage";
 type View = "landing" | "auth" | "dashboard";
 type DashPage = "api-keys" | "credits" | "usage" | "quickstart" | "models" | "routes" | "settings" | "referral";
 
+export interface PartnerContext {
+  slug: string;
+  name: string;
+}
+
 export function LandingApp() {
-  const [view, setView]         = useState<View>("landing");
-  const [dashPage, setDashPage] = useState<DashPage>("api-keys");
-  const navigate  = useNavigate();
-  const location  = useLocation();
+  const [view, setView]               = useState<View>("landing");
+  const [dashPage, setDashPage]       = useState<DashPage>("api-keys");
+  const [partnerCtx, setPartnerCtx]   = useState<PartnerContext | null>(null);
+  const navigate   = useNavigate();
+  const location   = useLocation();
+  const [params]   = useSearchParams();
 
   useEffect(() => {
+    /* Legacy state-based auth open */
     if (location.state?.openAuth) {
       setView("auth");
       window.history.replaceState({}, "");
     }
-  }, [location.state]);
+    /* URL-based: ?openDash=1 after returning from /sign-up or /sign-in */
+    if (params.get("openDash") === "1") {
+      const slug = params.get("partner");
+      if (slug) {
+        const name = slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+        setPartnerCtx({ slug, name });
+      }
+      setDashPage("api-keys");
+      setView("dashboard");
+      /* Clean up URL without reloading */
+      navigate("/", { replace: true });
+    }
+  }, [location.state, params]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const goAuth = () => setView("auth");
   const goDash = (page: DashPage = "api-keys") => { setDashPage(page); setView("dashboard"); };
 
   if (view === "dashboard") {
     const pages: Record<DashPage, React.ReactNode> = {
-      "api-keys":   <ApiKeysPage />,
+      "api-keys":   <ApiKeysPage partnerContext={partnerCtx} />,
       "credits":    <CreditsPage />,
       "usage":      <UsagePage />,
       "quickstart": <QuickstartPage />,

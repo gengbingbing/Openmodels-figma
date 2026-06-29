@@ -1,10 +1,17 @@
 import { useState } from "react";
-import { Eye, EyeOff, ArrowLeft, AlertCircle, Check, Zap } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft, AlertCircle, Check, Zap, Store } from "lucide-react";
 import { F } from "../lib/type";
 
 const blue = "#0047FF";
 
-interface Props { onSuccess: () => void; onBack: () => void; }
+interface Props {
+  onSuccess:    () => void;
+  onBack:       () => void;
+  partnerSlug?: string;       /* e.g. "acme-ai" */
+  partnerName?: string;       /* e.g. "Acme AI" */
+  partnerAccent?: string;     /* e.g. "#0047FF" */
+  defaultMode?: "signin" | "signup";
+}
 type Mode = "signin" | "signup";
 
 const GoogleIcon = () => (
@@ -130,8 +137,8 @@ function PasswordStrength({ password }: { password: string }) {
   );
 }
 
-export function AuthPage({ onSuccess, onBack }: Props) {
-  const [mode, setMode]           = useState<Mode>("signin");
+export function AuthPage({ onSuccess, onBack, partnerSlug, partnerName, partnerAccent, defaultMode = "signin" }: Props) {
+  const [mode, setMode]           = useState<Mode>(defaultMode);
   const [email, setEmail]         = useState("");
   const [password, setPassword]   = useState("");
   const [name, setName]           = useState("");
@@ -208,6 +215,22 @@ export function AuthPage({ onSuccess, onBack }: Props) {
             border: "1px solid #E5E5E5", borderRadius: 8,
             boxShadow: "0 1px 2px rgba(0,0,0,0.03)",
           }}>
+
+            {/* Partner context banner */}
+            {partnerSlug && partnerName && (
+              <div style={{ borderBottom: "1px solid #EFEFEF", background: (partnerAccent ?? blue) + "08" }}>
+                <div style={{ padding: "12px 24px", display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ width: 24, height: 24, borderRadius: 5, background: partnerAccent ?? blue, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <span style={{ fontFamily: F.sans, fontSize: 10, fontWeight: 700, color: "#fff" }}>{partnerName.charAt(0)}</span>
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: F.sans, fontSize: 12, fontWeight: 600, color: "#111" }}>Continue with {partnerName} Marketplace</div>
+                    <div style={{ fontFamily: F.sans, fontSize: 11, color: "#888", marginTop: 1 }}>Use your OpenModels account for credits, billing, and API key management.</div>
+                  </div>
+                  <Store size={13} color="#C0C0C0" style={{ flexShrink: 0 }} />
+                </div>
+              </div>
+            )}
 
             {/* Card header */}
             <div style={{ padding: "24px 24px 0" }}>

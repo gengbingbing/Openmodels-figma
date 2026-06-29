@@ -9,7 +9,7 @@ const B = "1px solid #e2e2e2";
 
 const footerLinks: Record<string, { label: string; href: string }[]> = {
   Product:     [{ label: "Models", href: "/models" }, { label: "Plans", href: "/plans" }, { label: "Docs", href: "/docs" }, { label: "x402", href: "/x402" }],
-  Marketplace: [{ label: "All models", href: "/models" }, { label: "Pricing", href: "/models" }, { label: "x402 Endpoints", href: "/x402" }, { label: "Partner Program", href: "/partners" }, { label: "Become a provider", href: "/providers/apply" }],
+  Marketplace: [{ label: "All models", href: "/models" }, { label: "Pricing", href: "/models" }, { label: "x402 Endpoints", href: "/x402" }, { label: "Partner Program", href: "/partners" }, { label: "Become a provider", href: "/provider-console" }],
   Company:     [{ label: "Company", href: "/company" }, { label: "Contact", href: "/contact" }],
   Legal:       [{ label: "Terms", href: "/terms" }, { label: "Privacy", href: "/privacy" }, { label: "Data Policy", href: "/data-policy" }],
 };

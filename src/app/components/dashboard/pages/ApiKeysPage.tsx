@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { Copy, Check, Trash2, Plus, Eye, EyeOff, X, AlertTriangle, Key } from "lucide-react";
-import { T, F } from "../../../lib/type";
+import { useState, useMemo } from "react";
+import { Copy, Check, Trash2, Plus, Eye, EyeOff, X, AlertTriangle, Key, Store } from "lucide-react";
+import { F } from "../../../lib/type";
 import { D } from "../shared";
 import { copyText } from "../../../lib/clipboard";
+
+export interface PartnerContext { slug: string; name: string; }
 
 /* ── landing-matched tokens ── */
 const B  = "1px solid #e2e2e2";
@@ -13,6 +15,7 @@ interface ApiKey {
   id: number; name: string; prefix: string; suffix: string;
   created: string; status: "active" | "revoked";
   monthlyLimit: number | null; monthlySpend: number;
+  partnerSource?: string;   /* e.g. "Acme AI Marketplace" */
 }
 
 const initialKeys: ApiKey[] = [
@@ -167,8 +170,24 @@ function ModelSnippet() {
   );
 }
 
-export function ApiKeysPage() {
-  const [keys, setKeys]           = useState<ApiKey[]>(initialKeys);
+export function ApiKeysPage({ partnerContext }: { partnerContext?: PartnerContext | null }) {
+  const startKeys = useMemo(() => {
+    if (!partnerContext) return initialKeys;
+    const partnerKey: ApiKey = {
+      id: 9001,
+      name: `${partnerContext.name} Marketplace Key`,
+      prefix: "sk-om-",
+      suffix: "mk01",
+      created: new Date().toISOString().slice(0, 10),
+      status: "active",
+      monthlyLimit: null,
+      monthlySpend: 0,
+      partnerSource: `${partnerContext.name} Marketplace`,
+    };
+    return [partnerKey, ...initialKeys];
+  }, [partnerContext]);
+
+  const [keys, setKeys]           = useState<ApiKey[]>(startKeys);
   const [showCreate, setShowCreate] = useState(false);
   const [newName, setNewName]     = useState("");
   const [newLimit, setNewLimit]   = useState("");
@@ -328,6 +347,23 @@ export function ApiKeysPage() {
       {/* ── Model ID usage snippet ── */}
       <ModelSnippet />
 
+      {/* ── Partner key created banner ── */}
+      {partnerContext && (
+        <div style={{ margin: "24px 28px 0", border: "1px solid #BFDBFE", background: "#EFF6FF", padding: "14px 20px", display: "flex", alignItems: "flex-start", gap: 12 }}>
+          <div style={{ width: 28, height: 28, borderRadius: 6, background: "#0047FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
+            <Store size={13} color="#fff" />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 600, color: "#1D4ED8", marginBottom: 4 }}>
+              Partner key created — {partnerContext.name} Marketplace
+            </div>
+            <div style={{ fontFamily: F.sans, fontSize: D.label, color: "#3B82F6", lineHeight: 1.6 }}>
+              A <strong>{partnerContext.name} Marketplace Key</strong> has been added. Use it with any model from the {partnerContext.name} marketplace using the <code style={{ fontFamily: "var(--font-mono,'Geist Mono',monospace)", fontSize: 11 }}>{partnerContext.slug.split("-")[0]}/model-id</code> namespace.
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── Created key banner ── */}
       {createdKey && (
         <div style={{ margin: "24px 28px 0", border: "1px solid #bbf7d0", background: "#f0fdf4", padding: "16px 20px" }}>
@@ -396,7 +432,17 @@ export function ApiKeysPage() {
               onMouseLeave={(e) => { e.currentTarget.style.background = "#fff"; }}
             >
               {/* Name */}
-              <span style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 600, color: "#0a0a0a" }}>{k.name}</span>
+              <div>
+                <span style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 600, color: "#0a0a0a" }}>{k.name}</span>
+                {k.partnerSource && (
+                  <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 3 }}>
+                    <span style={{ fontFamily: F.sans, fontSize: 10, fontWeight: 600, color: "#0047FF", background: "#EFF6FF", border: "1px solid #BFDBFE", padding: "1px 6px", borderRadius: 999, letterSpacing: "0.03em" }}>Partner key</span>
+                  </div>
+                )}
+                {k.partnerSource && (
+                  <div style={{ fontFamily: F.sans, fontSize: 10, color: "#A3A3A3", marginTop: 2 }}>Source: {k.partnerSource}</div>
+                )}
+              </div>
 
               {/* Key */}
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
