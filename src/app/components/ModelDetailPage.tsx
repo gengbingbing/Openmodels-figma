@@ -4,6 +4,8 @@ import { Copy, Check, ChevronRight, ArrowLeft, ExternalLink } from "lucide-react
 import { F } from "../lib/type";
 import { getModelById, getRelatedModels } from "../lib/models-data";
 import { Header } from "./Header";
+import { Footer } from "./Footer";
+import { SupportButton } from "./SupportButton";
 
 const B  = "1px solid #e2e2e2";
 const Bs = "1px solid #eeeeee";
@@ -193,7 +195,7 @@ export function ModelDetailPage() {
           <div style={{ padding: "28px 32px 0", borderBottom: B }}>
             <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 24, flexWrap: "wrap", marginBottom: 24 }}>
               <div style={{ flex: 1, minWidth: 280 }}>
-                <h1 style={{ fontFamily: F.mono, fontSize: 22, fontWeight: 600, letterSpacing: 0, color: "#111", marginBottom: 10, lineHeight: 1.3 }}>
+                <h1 style={{ fontFamily: F.sans, fontSize: 22, fontWeight: 600, letterSpacing: 0, color: "#111", marginBottom: 10, lineHeight: 1.3 }}>
                   {model.name}
                 </h1>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
@@ -497,7 +499,7 @@ export function ModelDetailPage() {
                   <div style={{ padding: "10px 20px", borderTop: Bs, background: "#fafafa", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
                     <span style={{ fontFamily: F.sans, fontSize: 12, color: "#666" }}>
                       {selectedRoute === "auto" ? "Auto route:" : "Selected route:"}{" "}
-                      <span style={{ fontFamily: F.mono, fontWeight: 600, color: "#111" }}>{activeRoute.provider}</span>
+                      <span style={{ fontFamily: F.sans, fontWeight: 600, color: "#111" }}>{activeRoute.provider}</span>
                       <span style={{ color: "#ddd", margin: "0 6px" }}>·</span>
                       <span style={{ color: "#888" }}>{activeRoute.supply} supply</span>
                       <span style={{ color: "#ddd", margin: "0 6px" }}>·</span>
@@ -526,7 +528,7 @@ export function ModelDetailPage() {
                         {activeRoute
                           ? <>
                               <span style={{ color: "#A3A3A3" }}>Selected provider: </span>
-                              <span style={{ fontFamily: F.mono, color: "#555", fontWeight: 500 }}>{activeRoute.provider}</span>
+                              <span style={{ fontFamily: F.sans, color: "#555", fontWeight: 500 }}>{activeRoute.provider}</span>
                               <span style={{ color: "#ddd", margin: "0 5px" }}>·</span>
                               <span style={{ color: "#A3A3A3" }}>{activeRoute.supply} supply</span>
                             </>
@@ -727,7 +729,7 @@ export function ModelDetailPage() {
                       onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = "#fafafa"; (e.currentTarget as HTMLDivElement).style.borderColor = "#ccc"; }}
                       onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = "#fff"; (e.currentTarget as HTMLDivElement).style.borderColor = "#E5E5E5"; }}
                     >
-                      <div style={{ fontFamily: F.mono, fontSize: 13, color: "#111", marginBottom: 6, fontWeight: 600 }}>{m.shortName}</div>
+                      <div style={{ fontFamily: F.sans, fontSize: 13, color: "#111", marginBottom: 6, fontWeight: 600 }}>{m.shortName}</div>
                       <div style={{ display: "flex", gap: 10, marginBottom: 8 }}>
                         <span style={{ fontFamily: F.mono, fontSize: 12, color: "#555" }}>${m.input.toFixed(2)} in</span>
                         <span style={{ fontFamily: F.mono, fontSize: 12, color: "#888" }}>${m.output.toFixed(2)} out</span>
@@ -772,6 +774,9 @@ export function ModelDetailPage() {
           .price-cells   { grid-template-columns: repeat(2,1fr) !important; }
         }
       `}</style>
+
+      <Footer onGetKey={goAuth} />
+      <SupportButton />
     </div>
   );
 }

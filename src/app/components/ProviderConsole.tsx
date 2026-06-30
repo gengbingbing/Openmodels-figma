@@ -356,7 +356,7 @@ function OverviewPage({ state, setPage }: { state: ProviderState; setPage: (p: P
           </div>
           {state.routes.slice(0, 5).map((r, i) => (
             <div key={r.id} style={{ display: "grid", gridTemplateColumns: "1fr 80px 80px 80px 80px", padding: "10px 16px", borderBottom: i < 4 ? Bs : "none", alignItems: "center" }}>
-              <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#333" }}>{r.model}</span>
+              <span style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 600, color: "#333" }}>{r.model}</span>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
                 <HealthDot health={r.health} />
                 <span style={{ fontFamily: F.sans, fontSize: D.label, color: r.health === "healthy" ? "#15803D" : r.health === "degraded" ? "#92400E" : "#DC2626" }}>
@@ -425,7 +425,7 @@ function RoutesPage({ state, setState }: { state: ProviderState; setState: (s: P
               onMouseEnter={(e) => (e.currentTarget.style.background = "#FAFAFA")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
             >
-              <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#111", fontWeight: 500 }}>{r.model}</span>
+              <span style={{ fontFamily: F.sans, fontSize: D.body, color: "#111", fontWeight: 600 }}>{r.model}</span>
               <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#333", fontVariantNumeric: "tabular-nums" }}>${r.inputPer1M.toFixed(2)}</span>
               <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#555", fontVariantNumeric: "tabular-nums" }}>${r.outputPer1M.toFixed(2)}</span>
               <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#888", fontVariantNumeric: "tabular-nums" }}>{r.cachePer1M ? `$${r.cachePer1M.toFixed(2)}` : "—"}</span>
@@ -562,7 +562,7 @@ function HealthPage({ state }: { state: ProviderState }) {
         </div>
         {state.routes.map((r, i) => (
           <div key={r.id} style={{ display: "grid", gridTemplateColumns: "1fr 80px 80px 80px 90px 1fr", padding: "11px 28px", borderBottom: i < state.routes.length - 1 ? Bs : "none", alignItems: "center", minWidth: 720 }}>
-            <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#111" }}>{r.model}</span>
+            <span style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 600, color: "#111" }}>{r.model}</span>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
               <HealthDot health={r.health} />
               <span style={{ fontFamily: F.sans, fontSize: D.label, color: r.health === "healthy" ? "#15803D" : r.health === "degraded" ? "#92400E" : "#DC2626" }}>
@@ -606,7 +606,7 @@ function UsagePage() {
         {rows.map((r, i) => (
           <div key={i} style={{ display: "grid", gridTemplateColumns: "100px 1fr 80px 80px 80px 80px 60px", padding: "10px 28px", borderBottom: i < rows.length - 1 ? Bs : "none", alignItems: "center", minWidth: 660 }}>
             <span style={{ fontFamily: F.mono, fontSize: D.label, color: "#B0B0B0" }}>{r.date}</span>
-            <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#333" }}>{r.model}</span>
+            <span style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 600, color: "#333" }}>{r.model}</span>
             <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#555" }}>{r.req}</span>
             <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#555" }}>{r.inTok}</span>
             <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#555" }}>{r.outTok}</span>
@@ -741,17 +741,16 @@ export function ProviderConsole() {
       <aside style={{ width: 220, background: "#FAFAFA", borderRight: B, display: "flex", flexDirection: "column", flexShrink: 0 }}>
         {/* Brand */}
         <div style={{ padding: "14px 16px", borderBottom: B }}>
-          <div style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 700, color: "#111", letterSpacing: "-0.025em" }}>
+          <div style={{ fontFamily: F.sans, fontSize: D.title, fontWeight: 600, color: "#111", letterSpacing: "-0.02em" }}>
             <span style={{ color: blue }}>Open</span>Models
-            <span style={{ color: "#A3A3A3", fontWeight: 400 }}> Provider</span>
+            <span style={{ color: "#A3A3A3", fontWeight: 400, fontSize: 11 }}> Provider</span>
           </div>
         </div>
 
         {/* Workspace info */}
         <div style={{ padding: "10px 16px 10px", borderBottom: B }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
+          <div style={{ marginBottom: 3 }}>
             <span style={{ fontFamily: F.sans, fontSize: D.label, color: "#A3A3A3" }}>Provider workspace</span>
-            <StatusPill status={state.status} />
           </div>
           <div style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 500, color: "#111", marginTop: 4 }}>{state.name}</div>
           <div style={{ fontFamily: F.sans, fontSize: D.label, color: "#A3A3A3" }}>{liveCount} live routes</div>

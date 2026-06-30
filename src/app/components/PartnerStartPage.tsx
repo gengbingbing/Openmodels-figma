@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router";
 import { Check, X } from "lucide-react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { SupportButton } from "./SupportButton";
 import { SEO } from "../lib/seo";
 import { F, WS } from "../lib/type";
 
@@ -152,6 +153,7 @@ export function PartnerStartPage() {
           </div>
         </div>
         <Footer onGetKey={goAuth} />
+      <SupportButton />
       </div>
     );
   }
@@ -253,6 +255,7 @@ export function PartnerStartPage() {
       </div>
 
       <Footer onGetKey={goAuth} />
+      <SupportButton />
 
       {showModal && <PublishModal onClose={() => setShowModal(false)} onConfirm={handlePublish} />}
 

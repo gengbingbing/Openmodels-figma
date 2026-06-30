@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from "react-router";
 import { ExternalLink, Copy, Check, ChevronRight } from "lucide-react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { SupportButton } from "./SupportButton";
 import { SEO, JsonLd, breadcrumbLd, faqLd } from "../lib/seo";
 import { allModels } from "../lib/models-data";
 import { F, WS } from "../lib/type";
@@ -250,7 +251,7 @@ export function ProviderDetailPage() {
                         onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                       >
                         <td style={{ padding: "0 24px" }}>
-                          <span style={{ fontFamily: F.mono, fontSize: WS.body, color: "#111", fontWeight: 500 }}>{r.modelId}</span>
+                          <span style={{ fontFamily: F.sans, fontSize: WS.body, color: "#111", fontWeight: 600 }}>{r.modelId}</span>
                         </td>
                         <td style={{ padding: "0 24px", fontFamily: F.mono, fontSize: WS.body, fontWeight: 600, color: "#111", fontVariantNumeric: "tabular-nums", textAlign: "right" }}>${r.input.toFixed(2)}</td>
                         <td style={{ padding: "0 24px", fontFamily: F.mono, fontSize: WS.body, color: "#555", fontVariantNumeric: "tabular-nums", textAlign: "right" }}>{r.output > 0 ? `$${r.output.toFixed(2)}` : "—"}</td>
@@ -347,6 +348,7 @@ export function ProviderDetailPage() {
       </div>
 
       <Footer onGetKey={goAuth} />
+      <SupportButton />
 
       <style>{`
         @media (max-width: 768px) {

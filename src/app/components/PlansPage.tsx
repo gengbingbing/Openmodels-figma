@@ -4,6 +4,7 @@ import { Check, ChevronRight } from "lucide-react";
 import { SEO, JsonLd, breadcrumbLd, faqLd } from "../lib/seo";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { SupportButton } from "./SupportButton";
 import { F, WS } from "../lib/type";
 
 const blue = "#0047FF";
@@ -201,6 +202,7 @@ export function PlansPage() {
       </div>
 
       <Footer onGetKey={goAuth} />
+      <SupportButton />
 
       <style>{`
         @media (max-width: 900px) {

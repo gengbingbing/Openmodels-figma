@@ -160,7 +160,7 @@ function AddModelDrawer({ plan, onAdd, onClose }: { plan: PlanStatus; onAdd: (m:
                     <span style={{ width: 14, height: 14, borderRadius: "50%", border: `2px solid ${selectedModel === m.id ? blue : "#D0D0D0"}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       {selectedModel === m.id && <span style={{ width: 6, height: 6, borderRadius: "50%", background: blue }} />}
                     </span>
-                    <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#111" }}>{m.id}</span>
+                    <span style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 600, color: "#111" }}>{m.id}</span>
                   </div>
                   <div style={{ display: "flex", gap: 16, fontFamily: F.sans, fontSize: D.label, color: "#888" }}>
                     <span>{m.context}</span>
@@ -529,7 +529,7 @@ function ModelsPage({ state, setState, plan }: { state: PartnerState; setState: 
           </div>
           {state.marketplaceModels.map((m, i) => (
             <div key={m.modelId} style={{ display: "grid", gridTemplateColumns: "1fr 120px 80px 80px 60px 90px 90px 60px 40px", padding: "0 16px", minHeight: 52, borderBottom: i < state.marketplaceModels.length - 1 ? Bs : "none", alignItems: "center" }}>
-              <span style={{ fontFamily: F.mono, fontSize: D.label, color: "#111", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{m.modelId}</span>
+              <span style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 600, color: "#111", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{m.modelId}</span>
               <span style={{ fontFamily: F.sans, fontSize: D.label, color: "#666", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{m.provider}</span>
               <span style={{ fontFamily: F.mono, fontSize: D.label, color: "#AAAAAA", textAlign: "right" }}>${m.baseInput.toFixed(2)}</span>
               <span style={{ fontFamily: F.mono, fontSize: D.label, color: "#AAAAAA", textAlign: "right" }}>${m.baseOutput.toFixed(2)}</span>
@@ -647,7 +647,7 @@ function PreviewPage({ state, onPublish }: { state: PartnerState; onPublish: () 
           ) : (
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
               {state.marketplaceModels.slice(0, 8).map((m) => (
-                <span key={m.modelId} style={{ fontFamily: F.mono, fontSize: D.label, color: "#555", background: "#F0F0F0", padding: "3px 8px", borderRadius: 4 }}>{m.modelId}</span>
+                <span key={m.modelId} style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 600, color: "#555", background: "#F0F0F0", padding: "3px 8px", borderRadius: 4 }}>{m.modelId}</span>
               ))}
             </div>
           )}
@@ -661,7 +661,6 @@ function PreviewPage({ state, onPublish }: { state: PartnerState; onPublish: () 
 }
 
 function SettingsPage({ state, setState, openPlanModal }: { state: PartnerState; setState: (s: Partial<PartnerState>) => void; openPlanModal: () => void }) {
-  const hasDomain = state.plan === "growth" || state.plan === "scale";
   const planLabel = state.plan ? state.plan.charAt(0).toUpperCase() + state.plan.slice(1) : "Not selected";
   return (
     <div style={{ padding: "28px 32px", maxWidth: 540 }}>
@@ -685,35 +684,11 @@ function SettingsPage({ state, setState, openPlanModal }: { state: PartnerState;
         </div>
       </div>
       <div style={{ marginBottom: 24 }}>
-        <div style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 600, color: "#A3A3A3", letterSpacing: "0.06em", marginBottom: 10, textTransform: "uppercase" as const }}>Domain</div>
+        <div style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 600, color: "#A3A3A3", letterSpacing: "0.06em", marginBottom: 10, textTransform: "uppercase" as const }}>Marketplace URL</div>
         <div style={{ border: B, borderRadius: 8, overflow: "hidden" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "160px 1fr", padding: "12px 16px", borderBottom: Bs, alignItems: "center" }}>
-            <span style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 500, color: "#A3A3A3", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>OpenModels URL</span>
+          <div style={{ display: "grid", gridTemplateColumns: "160px 1fr", padding: "12px 16px", alignItems: "center" }}>
+            <span style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 500, color: "#A3A3A3", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>Public URL</span>
             <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#333" }}>{state.slug ? `openmodels.market/p/${state.slug}` : "—"}</span>
-          </div>
-          <div style={{ padding: "14px 16px" }}>
-            <div style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 500, color: "#A3A3A3", letterSpacing: "0.04em", textTransform: "uppercase" as const, marginBottom: 8 }}>Custom domain</div>
-            {!hasDomain ? (
-              <>
-                <input disabled placeholder="market.yourdomain.com" style={{ ...inputSt, color: "#C0C0C0", background: "#FAFAFA", cursor: "not-allowed", marginBottom: 8 }} />
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontFamily: F.sans, fontSize: D.label, color: "#A3A3A3" }}>Custom domain is available on Growth and Scale.</span>
-                  <button onClick={openPlanModal} style={{ background: "none", border: "none", cursor: "pointer", fontFamily: F.sans, fontSize: D.label, fontWeight: 500, color: blue, padding: 0, whiteSpace: "nowrap" as const }}>Upgrade plan →</button>
-                </div>
-              </>
-            ) : (
-              <>
-                <input placeholder="market.yourdomain.com" style={{ ...inputSt, marginBottom: 10 }} />
-                <div style={{ background: "#FAFAFA", border: Bs, borderRadius: 6, padding: "10px 12px", marginBottom: 10 }}>
-                  <div style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 500, color: "#777", marginBottom: 4 }}>Add this CNAME record</div>
-                  <code style={{ fontFamily: F.mono, fontSize: D.label, color: "#333" }}>market.yourdomain.com → partners.openmodels.market</code>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <button style={{ height: 30, padding: "0 12px", fontFamily: F.sans, fontSize: D.label, fontWeight: 500, color: "#555", background: "#fff", border: B, borderRadius: 4, cursor: "pointer" }}>Verify domain</button>
-                  <span style={{ fontFamily: F.sans, fontSize: D.label, color: "#A3A3A3" }}>Not connected</span>
-                </div>
-              </>
-            )}
           </div>
         </div>
       </div>
@@ -758,7 +733,7 @@ function UsagePage({ state }: { state: PartnerState }) {
             <span style={{ fontFamily: F.mono, fontSize: D.label, color: "#B0B0B0" }}>{r.date}</span>
             <span style={{ fontFamily: F.mono, fontSize: D.label, color: "#555" }}>{r.customer}</span>
             <span style={{ fontFamily: F.mono, fontSize: D.label, color: "#888" }}>{r.key}</span>
-            <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#111" }}>{r.model}</span>
+            <span style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 600, color: "#111" }}>{r.model}</span>
             <span style={{ fontFamily: F.sans, fontSize: D.label, color: "#777" }}>{r.route}</span>
             <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#555", fontVariantNumeric: "tabular-nums" }}>{r.req.toLocaleString()}</span>
             <span style={{ fontFamily: F.mono, fontSize: D.body, color: "#555" }}>{r.tokens}</span>
@@ -839,68 +814,43 @@ function PayoutsPage() {
 /* ─── Quickstart ──────────────────────────────────────────── */
 function QuickstartPage({ state }: { state: PartnerState }) {
   const partnerId = state.slug || "your-partner-id";
-  const [copiedA, setCopiedA] = useState(false);
-  const [copiedB, setCopiedB] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const curlA = `curl https://api.getopenmodels.com/v1/chat/completions \\
+  const curl = `curl https://api.getopenmodels.com/v1/chat/completions \\
   -H "Authorization: Bearer $OPENMODELS_API_KEY" \\
   -H "X-OpenModels-Partner: ${partnerId}" \\
   -H "Content-Type: application/json" \\
   -d '{"model":"deepseek-v3","messages":[{"role":"user","content":"Hello"}]}'`;
 
-  const curlB = `https://api.getopenmodels.com/v1/chat/completions?partner=${partnerId}`;
-
-  const copy = (text: string, which: "a" | "b") => {
-    navigator.clipboard.writeText(text).catch(() => {});
-    if (which === "a") { setCopiedA(true); setTimeout(() => setCopiedA(false), 1600); }
-    else               { setCopiedB(true); setTimeout(() => setCopiedB(false), 1600); }
+  const copyCode = () => {
+    navigator.clipboard.writeText(curl).catch(() => {});
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1600);
   };
+
+  const partnerName = state.name || partnerId;
 
   return (
     <div style={{ padding: "24px 28px", maxWidth: 640 }}>
       <div style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 600, color: blue, letterSpacing: "0.06em", marginBottom: 3 }}>QUICKSTART</div>
-      <h2 style={{ fontFamily: F.sans, fontSize: D.title, fontWeight: 600, color: "#111", marginBottom: 4 }}>Pass your Partner ID in API requests</h2>
+      <h2 style={{ fontFamily: F.sans, fontSize: D.title, fontWeight: 600, color: "#111", marginBottom: 4 }}>Customer quickstart</h2>
       <p style={{ fontFamily: F.sans, fontSize: D.body, color: "#666", marginBottom: 24, lineHeight: 1.65 }}>
-        Use your Partner ID in requests so OpenModels can attribute usage and payouts correctly. Share these instructions with your customers.
+        Share this example with customers. Your Partner ID is already included for attribution.
       </p>
 
-      {/* Method A */}
+      {/* Code block */}
       <div style={{ marginBottom: 24 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-          <span style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 700, color: "#111", background: "#111", color: "#fff", padding: "1px 7px", borderRadius: 3, fontSize: 10, letterSpacing: "0.04em" }}>A</span>
-          <span style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 600, color: "#111" }}>Header — recommended</span>
-        </div>
         <div style={{ background: "#0a0a0a", overflow: "hidden" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 14px", borderBottom: "1px solid #1a1a1a" }}>
             <span style={{ fontFamily: F.mono, fontSize: 11, color: "#555" }}>bash</span>
-            <button onClick={() => copy(curlA, "a")} style={{ display: "inline-flex", alignItems: "center", gap: 4, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", padding: "3px 9px", cursor: "pointer", fontFamily: F.sans, fontSize: 11, color: copiedA ? "#22c55e" : "#888", transition: "color 100ms" }}>
-              {copiedA ? <Check size={10} /> : <Copy size={10} />}{copiedA ? "Copied" : "Copy"}
+            <button onClick={copyCode} style={{ display: "inline-flex", alignItems: "center", gap: 4, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", padding: "3px 9px", cursor: "pointer", fontFamily: F.sans, fontSize: 11, color: copied ? "#22c55e" : "#888", transition: "color 100ms" }}>
+              {copied ? <Check size={10} /> : <Copy size={10} />}{copied ? "Copied" : "Copy customer quickstart"}
             </button>
           </div>
-          <pre style={{ margin: 0, padding: "14px", fontFamily: F.mono, fontSize: 12, color: "#e5e5e5", overflowX: "auto", whiteSpace: "pre", lineHeight: 1.75 }}>{curlA}</pre>
+          <pre style={{ margin: 0, padding: "14px", fontFamily: F.mono, fontSize: 12, color: "#e5e5e5", overflowX: "auto", whiteSpace: "pre", lineHeight: 1.75 }}>{curl}</pre>
         </div>
-        <p style={{ fontFamily: F.sans, fontSize: D.label, color: "#B0B0B0", marginTop: 7 }}>
-          The <code style={{ fontFamily: F.mono, fontSize: 11 }}>X-OpenModels-Partner</code> header is the recommended way to pass your partner ID.
-        </p>
-      </div>
-
-      {/* Method B */}
-      <div style={{ marginBottom: 28 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-          <span style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 700, background: "#888", color: "#fff", padding: "1px 7px", borderRadius: 3, fontSize: 10, letterSpacing: "0.04em" }}>B</span>
-          <span style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 600, color: "#111" }}>Query param — fallback</span>
-        </div>
-        <div style={{ background: "#0a0a0a", overflow: "hidden" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 14px", borderBottom: "1px solid #1a1a1a" }}>
-            <span style={{ fontFamily: F.mono, fontSize: 11, color: "#555" }}>url</span>
-            <button onClick={() => copy(curlB, "b")} style={{ display: "inline-flex", alignItems: "center", gap: 4, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", padding: "3px 9px", cursor: "pointer", fontFamily: F.sans, fontSize: 11, color: copiedB ? "#22c55e" : "#888", transition: "color 100ms" }}>
-              {copiedB ? <Check size={10} /> : <Copy size={10} />}{copiedB ? "Copied" : "Copy"}
-            </button>
-          </div>
-          <pre style={{ margin: 0, padding: "14px", fontFamily: F.mono, fontSize: 12, color: "#e5e5e5", overflowX: "auto", whiteSpace: "pre", lineHeight: 1.75 }}>{curlB}</pre>
-        </div>
-        <p style={{ fontFamily: F.sans, fontSize: D.label, color: "#B0B0B0", marginTop: 7 }}>
-          Use <code style={{ fontFamily: F.mono, fontSize: 11 }}>?partner={partnerId}</code> when headers cannot be customised.
+        <p style={{ fontFamily: F.sans, fontSize: D.label, color: "#B0B0B0", margin: "7px 0 0" }}>
+          Requests using this header are attributed to {partnerName} for usage and payout tracking.
         </p>
       </div>
 
@@ -910,9 +860,10 @@ function QuickstartPage({ state }: { state: PartnerState }) {
           <span style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 600, color: "#A3A3A3", letterSpacing: "0.06em" }}>ATTRIBUTION FIELDS RECORDED</span>
         </div>
         {[
-          { k: "partner_id",        v: partnerId },
-          { k: "marketplace_id",    v: state.slug || "—" },
-          { k: "api_key_source",    v: "partner_marketplace" },
+          { k: "partner_id",     v: partnerId },
+          { k: "customer",       v: "linked OpenModels account" },
+          { k: "usage",          v: "tokens, requests per model" },
+          { k: "payout amount",  v: "calculated from attributed usage" },
         ].map((r, i, arr) => (
           <div key={r.k} style={{ display: "grid", gridTemplateColumns: "160px 1fr", padding: "9px 14px", borderBottom: i < arr.length - 1 ? Bs : "none" }}>
             <span style={{ fontFamily: F.mono, fontSize: D.label, color: "#A3A3A3" }}>{r.k}</span>
@@ -1006,19 +957,23 @@ export function PartnerApp() {
   return (
     <div style={{ display: "flex", height: "100vh", background: "#F7F7F7", fontFamily: F.sans, overflow: "hidden" }}>
       <aside style={{ width: 220, background: "#FAFAFA", borderRight: B, display: "flex", flexDirection: "column", flexShrink: 0 }}>
+        {/* Brand */}
         <div style={{ padding: "14px 16px", borderBottom: B }}>
-          <div style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 700, color: "#111", letterSpacing: "-0.025em" }}>
-            <span style={{ color: blue }}>Open</span>Models<span style={{ color: "#A3A3A3", fontWeight: 400 }}> Partner</span>
+          <div style={{ fontFamily: F.sans, fontSize: D.title, fontWeight: 600, color: "#111", letterSpacing: "-0.02em" }}>
+            <span style={{ color: blue }}>Open</span>Models
+            <span style={{ color: "#A3A3A3", fontWeight: 400, fontSize: 11 }}> Partner</span>
           </div>
         </div>
-        <div style={{ padding: "10px 16px 8px", borderBottom: B }}>
+
+        {/* Workspace info */}
+        <div style={{ padding: "10px 16px 10px", borderBottom: B }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
             <span style={{ fontFamily: F.sans, fontSize: D.label, color: "#A3A3A3" }}>Partner workspace</span>
-            <span style={{ fontFamily: F.sans, fontSize: D.label, fontWeight: 500, color: state.status === "live" ? "#15803D" : "#888", background: state.status === "live" ? "#F0FDF4" : "#F5F5F5", border: `1px solid ${state.status === "live" ? "#BBF7D0" : "#E5E5E5"}`, borderRadius: 999, padding: "1px 6px" }}>
+            <span style={{ fontFamily: F.sans, fontSize: 11, fontWeight: 500, color: state.status === "live" ? "#15803D" : "#888", background: state.status === "live" ? "#F0FDF4" : "#F5F5F5", border: `1px solid ${state.status === "live" ? "#BBF7D0" : "#E5E5E5"}`, borderRadius: 999, padding: "1px 6px" }}>
               {state.status === "live" ? "Live" : "Draft"}
             </span>
           </div>
-          <div style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 500, color: "#111" }}>{state.name || "Draft marketplace"}</div>
+          <div style={{ fontFamily: F.sans, fontSize: D.body, fontWeight: 500, color: "#111", marginTop: 4 }}>{state.name || "Draft marketplace"}</div>
           <div style={{ fontFamily: F.sans, fontSize: D.label, color: "#A3A3A3" }}>team@example.com</div>
         </div>
         <nav style={{ padding: "6px 8px", flex: 1 }}>
@@ -1039,10 +994,13 @@ export function PartnerApp() {
             );
           })}
         </nav>
-        <div style={{ borderTop: B, padding: "8px 8px 10px" }}>
-          <button onClick={() => navigate("/")} style={{ width: "100%", display: "flex", alignItems: "center", gap: 7, padding: "0 10px", height: 32, background: "none", border: "none", cursor: "pointer", color: "#B0B0B0", fontFamily: F.sans, fontSize: D.body, transition: "color 80ms" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#555")} onMouseLeave={(e) => (e.currentTarget.style.color = "#B0B0B0")}>
-            <ChevronLeft size={13} strokeWidth={1.5} /> Back to OpenModels
+        {/* Footer */}
+        <div style={{ padding: "12px 16px", borderTop: B }}>
+          <button onClick={() => navigate("/")} style={{ display: "flex", alignItems: "center", gap: 5, background: "none", border: "none", cursor: "pointer", fontFamily: F.sans, fontSize: D.label, color: "#A3A3A3", padding: 0, transition: "color 100ms" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#555")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#A3A3A3")}
+          >
+            <ChevronLeft size={12} strokeWidth={1.5} />Back to OpenModels
           </button>
         </div>
       </aside>

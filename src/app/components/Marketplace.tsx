@@ -153,7 +153,7 @@ export function Marketplace({ onModelSelect }: MarketplaceProps = {}) {
                 onMouseEnter={(e) => (e.currentTarget.style.background = "#FAFAFA")}
                 onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
               >
-                <span style={{ fontFamily: F.mono, fontSize: T.sm, color: "#111" }}>{m.id}</span>
+                <span style={{ fontFamily: F.sans, fontSize: T.sm, fontWeight: 600, color: "#111" }}>{m.id}</span>
                 {/* Only price fields are bold */}
                 <span style={{ fontFamily: F.mono, fontSize: T.sm, fontWeight: 600, color: "#111" }}>${m.input.toFixed(2)}</span>
                 <span style={{ fontFamily: F.mono, fontSize: T.sm, fontWeight: 400, color: "#555" }}>{m.output > 0 ? `$${m.output.toFixed(2)}` : "—"}</span>

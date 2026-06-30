@@ -12,7 +12,9 @@ import { WhyOpenModels } from "./components/WhyOpenModels";
 import { ApiSection } from "./components/ApiSection";
 import { FAQ } from "./components/FAQ";
 import { HomeCtaStrips } from "./components/HomeCtaStrips";
+import { InfrastructureSection } from "./components/InfrastructureSection";
 import { Footer } from "./components/Footer";
+import { SupportButton } from "./components/SupportButton";
 
 import { AuthPage } from "./components/AuthPage";
 
@@ -112,6 +114,7 @@ export function LandingApp() {
         <div style={{ maxWidth: 1120, margin: "0 auto", borderLeft: "1px solid #e2e2e2", borderRight: "1px solid #e2e2e2" }}>
           <Hero onGetKey={goAuth} />
           <HomeMarketplace />
+          <InfrastructureSection />
           <ProviderNetwork />
           <Leaderboard />
           <WhyOpenModels />
@@ -122,6 +125,7 @@ export function LandingApp() {
         </div>
       </main>
       <Footer onGetKey={goAuth} />
+      <SupportButton />
     </div>
   );
 }

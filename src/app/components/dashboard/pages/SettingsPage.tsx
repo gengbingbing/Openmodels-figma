@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User, CreditCard, Trash2, Check, AlertTriangle, Lock, X } from "lucide-react";
+import { User, CreditCard, Trash2, Check, AlertTriangle, Lock, X, ChevronDown } from "lucide-react";
 import { T, F } from "../../../lib/type";
 import { B, Bs, blue } from "../shared";
 
@@ -247,6 +247,145 @@ function AddCardForm({ onCancel, onSave }: { onCancel: () => void; onSave: () =>
   );
 }
 
+/* ── Billing Profile ── */
+
+function BillingProfileSection() {
+  const [form, setForm] = useState({
+    company: "", email: "", country: "",
+    address1: "", address2: "", city: "", state: "", postal: "", taxId: "",
+  });
+  const [open,   setOpen]   = useState(false);
+  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+
+  const set = (k: keyof typeof form) => (v: string) => setForm((p) => ({ ...p, [k]: v }));
+  const hasSaved = form.company.trim() && form.email.trim() && form.country.trim();
+
+  /* Summary line shown in collapsed state when profile is filled */
+  const summary = hasSaved
+    ? [form.company, form.email, form.country].filter(Boolean).join(" · ")
+    : null;
+
+  const canSave  = !!form.company.trim() && !!form.email.trim() && !!form.country.trim();
+
+  const handleSave = () => {
+    if (!canSave || status === "saving") return;
+    setStatus("saving");
+    setTimeout(() => {
+      setStatus("saved");
+      setOpen(false);            /* collapse on success */
+      setTimeout(() => setStatus("idle"), 3000);
+    }, 1100);
+  };
+
+  const inp = (focused: boolean): React.CSSProperties => ({
+    width: "100%", height: 36, border: focused ? `1px solid ${blue}` : B,
+    padding: "0 10px", fontFamily: F.sans, fontSize: T.sm, color: "#111",
+    outline: "none", boxSizing: "border-box" as const, background: "#fff",
+    transition: "border-color 150ms",
+  });
+
+  function Input({ field, placeholder, type = "text" }: { field: keyof typeof form; placeholder?: string; type?: string }) {
+    const [focused, setFocused] = useState(false);
+    return (
+      <input type={type} value={form[field]} onChange={(e) => set(field)(e.target.value)} placeholder={placeholder}
+        onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} style={inp(focused)} />
+    );
+  }
+
+  const LBL = ({ text, req }: { text: string; req?: boolean }) => (
+    <label style={{ fontFamily: F.sans, fontSize: T.xs, fontWeight: 700, color: "#777", letterSpacing: "0.04em", display: "block", marginBottom: 5 }}>
+      {text.toUpperCase()}{req && <span style={{ color: "#DC2626", marginLeft: 2 }}>*</span>}
+    </label>
+  );
+
+  return (
+    <div style={{ marginBottom: 28, paddingBottom: 28, borderBottom: Bs }}>
+      <div style={{ fontFamily: F.sans, fontSize: T.sm, fontWeight: 600, color: "#111", marginBottom: 14 }}>Billing profile</div>
+
+      {/* ── Outer border — identical to Payment method container ── */}
+      <div style={{ border: B, borderRadius: 6, overflow: "hidden" }}>
+
+        {/* Row — identical height/padding to payment card row */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 16px", minHeight: 68 }}>
+          {hasSaved ? (
+            /* Filled: company name + email */
+            <div>
+              <div style={{ fontFamily: F.sans, fontSize: T.sm, fontWeight: 500, color: "#111", marginBottom: 2 }}>{form.company}</div>
+              {form.email && <div style={{ fontFamily: F.sans, fontSize: T.xs, color: "#bbb" }}>{form.email}</div>}
+            </div>
+          ) : (
+            /* Empty: label + add button */
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ fontFamily: F.sans, fontSize: T.sm, color: "#777" }}>Add company and invoice details</div>
+              <button
+                onClick={() => setOpen(true)}
+                style={{ fontFamily: F.sans, fontSize: T.sm, fontWeight: 600, color: "#555", background: "none", border: B, padding: "8px 18px", cursor: "pointer", transition: "border-color 100ms", width: "fit-content" }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#999")}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#e2e2e2")}
+              >+ Add billing details</button>
+            </div>
+          )}
+
+          {/* Right — Edit link only when filled */}
+          {hasSaved && (
+            <button
+              onClick={() => setOpen(!open)}
+              style={{ fontFamily: F.sans, fontSize: T.sm, fontWeight: 500, color: blue, background: "none", border: "none", cursor: "pointer", padding: 0, flexShrink: 0, transition: "opacity 100ms" }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            >Edit</button>
+          )}
+        </div>
+
+        {/* Expanded form */}
+        {open && (
+          <>
+            <div style={{ borderTop: B, padding: "20px 16px 16px" }}>
+              <div className="billing-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px 20px", marginBottom: 20 }}>
+                <div style={{ gridColumn: "1 / -1" }}><LBL text="Company / Legal name" req /><Input field="company" placeholder="Acme Inc." /></div>
+                <div><LBL text="Billing email" req /><Input field="email" placeholder="billing@example.com" type="email" /></div>
+                <div><LBL text="Country / Region" req /><Input field="country" placeholder="United States" /></div>
+                <div style={{ gridColumn: "1 / -1" }}><LBL text="Address line 1" /><Input field="address1" placeholder="123 Main St" /></div>
+                <div style={{ gridColumn: "1 / -1" }}><LBL text="Address line 2" /><Input field="address2" placeholder="Suite 100" /></div>
+                <div><LBL text="City" /><Input field="city" placeholder="San Francisco" /></div>
+                <div><LBL text="State / Province" /><Input field="state" placeholder="CA" /></div>
+                <div><LBL text="Postal code" /><Input field="postal" placeholder="94107" /></div>
+                <div><LBL text="Tax ID / VAT / EIN" /><Input field="taxId" placeholder="e.g. US123456789" /></div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <button
+                  onClick={handleSave}
+                  disabled={!canSave || status === "saving"}
+                  style={{ fontFamily: F.sans, fontSize: T.sm, fontWeight: 600, color: "#fff", background: (!canSave || status === "saving") ? "#D0D0D0" : "#111", border: "none", padding: "8px 18px", borderRadius: 5, cursor: (!canSave || status === "saving") ? "not-allowed" : "pointer", transition: "background 150ms" }}
+                  onMouseEnter={(e) => { if (canSave && status === "idle") e.currentTarget.style.background = "#2a2a2a"; }}
+                  onMouseLeave={(e) => { if (status === "idle") e.currentTarget.style.background = canSave ? "#111" : "#D0D0D0"; }}
+                >
+                  {status === "saving" ? "Saving…" : "Save billing profile"}
+                </button>
+                <button onClick={() => setOpen(false)} style={{ fontFamily: F.sans, fontSize: T.sm, color: "#999", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+                  Cancel
+                </button>
+                {status === "error" && (
+                  <span style={{ fontFamily: F.sans, fontSize: T.xs, color: "#DC2626", display: "flex", alignItems: "center", gap: 4 }}>
+                    <AlertTriangle size={12} /> Could not save billing profile. Try again.
+                  </span>
+                )}
+              </div>
+            </div>
+            <div style={{ padding: "10px 16px", borderTop: Bs, background: "#FAFAFA" }}>
+              <span style={{ fontFamily: F.sans, fontSize: T.xs, color: "#C0C0C0" }}>
+                This information is used by Stripe for invoices and receipts. Tax ID may be verified by Stripe.
+              </span>
+            </div>
+          </>
+        )}
+      </div>
+
+      <style>{`@media (max-width: 600px) { .billing-grid { grid-template-columns: 1fr !important; } }`}</style>
+    </div>
+  );
+}
+
 /* ── Section: Billing ── */
 
 function BillingSection() {
@@ -335,6 +474,9 @@ function BillingSection() {
           )
         }
       </div>
+
+      {/* Billing profile */}
+      <BillingProfileSection />
 
       {/* Invoice history */}
       <div>

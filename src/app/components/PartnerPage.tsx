@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { Check, ChevronRight } from "lucide-react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { SupportButton } from "./SupportButton";
 import { SEO, JsonLd, breadcrumbLd, faqLd } from "../lib/seo";
 import { F, WS } from "../lib/type";
 
@@ -206,6 +207,7 @@ export function PartnerPage() {
       </div>
 
       <Footer onGetKey={goAuth} />
+      <SupportButton />
 
       <style>{`
         @media (max-width: 768px) {

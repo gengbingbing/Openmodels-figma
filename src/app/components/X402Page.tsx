@@ -5,6 +5,7 @@ import { F, WS } from "../lib/type";
 import { SEO, JsonLd, breadcrumbLd, faqLd } from "../lib/seo";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { SupportButton } from "./SupportButton";
 
 const B  = "1px solid #e2e2e2";
 const Bs = "1px solid #eeeeee";
@@ -278,6 +279,7 @@ export function X402Page() {
       </div>
       </div>
       <Footer onGetKey={goAuth} />
+      <SupportButton />
 
       <style>{`
         @media (max-width: 768px) {

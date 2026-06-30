@@ -5,6 +5,7 @@ import { F, WS } from "../lib/type";
 import { X402_ENDPOINTS } from "./X402Page";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { SupportButton } from "./SupportButton";
 
 const B  = "1px solid #e2e2e2";
 const Bs = "1px solid #eeeeee";
@@ -379,6 +380,7 @@ export function X402DetailPage() {
         }
       `}</style>
       <Footer onGetKey={goAuth} />
+      <SupportButton />
     </>
   );
 }

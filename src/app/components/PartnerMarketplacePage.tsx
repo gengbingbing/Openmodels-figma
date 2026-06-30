@@ -108,10 +108,16 @@ export function PartnerMarketplacePage() {
 
   const curlExample = `curl https://api.getopenmodels.com/v1/chat/completions \\
   -H "Authorization: Bearer $OPENMODELS_API_KEY" \\
+  -H "X-OpenModels-Partner: ${partnerParam}" \\
   -H "Content-Type: application/json" \\
   -d '{
     "model": "${partner.namespace}/deepseek-v3",
-    "messages": [{"role": "user", "content": "Hello"}]
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hello"
+      }
+    ]
   }'`;
 
   const navItems = [
@@ -378,7 +384,7 @@ export function PartnerMarketplacePage() {
               <pre style={{ margin: 0, padding: "16px", fontFamily: F.mono, fontSize: 12, color: "#e5e5e5", overflowX: "auto", whiteSpace: "pre", lineHeight: 1.75 }}>{curlExample}</pre>
             </div>
             <p style={{ fontFamily: F.sans, fontSize: 11, color: "#C0C0C0", margin: 0 }}>
-              Credits and billing powered by OpenModels
+              Usage from this example is attributed to {partner.name}.
             </p>
           </div>
         </div>

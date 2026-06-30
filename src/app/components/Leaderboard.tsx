@@ -62,7 +62,7 @@ export function Leaderboard() {
                 >
                   <td style={{ padding: "0 24px", whiteSpace: "nowrap", verticalAlign: "middle" }}>
                     <span style={{ fontFamily: F.mono, fontSize: 12, color: "#C0C0C0", fontWeight: 400, marginRight: 8 }}>{row.rank}</span>
-                    <span style={{ fontFamily: F.mono, fontSize: WS.body, color: "#111", fontWeight: 600 }}>{row.model}</span>
+                    <span style={{ fontFamily: F.sans, fontSize: WS.body, color: "#111", fontWeight: 600 }}>{row.model}</span>
                   </td>
                   <td style={{ padding: "0 24px", fontFamily: F.mono, fontSize: WS.body, color: "#333", fontVariantNumeric: "tabular-nums", verticalAlign: "middle" }}>{row.requests}</td>
                   <td style={{ padding: "0 24px", fontFamily: F.mono, fontSize: WS.body, color: "#555", fontVariantNumeric: "tabular-nums", verticalAlign: "middle" }}>{row.tokens}</td>
